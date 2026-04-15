@@ -15,7 +15,7 @@ import axios from "axios";
 // the creators of Express have provided you with pre-built TypeScript Interfaces (blueprints) 
 // named Request and Response. 
 // You are importing those blueprints here to use as name tags for your variables.
-export const loginUser = TryCatch(async(req: Request, res:Response) => {
+export const loginUser = TryCatch(async(req, res) => {
     const {code} = req.body;
 
     if(!code) {

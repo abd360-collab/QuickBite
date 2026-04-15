@@ -16,3 +16,11 @@ export const oauth2client = new google.auth.OAuth2(
     GOOGLE_CLIENT_SECRET, // This is like your app’s password. Used to verify your app is real. Should be kept secret.
     "postmessage"
 )
+
+// When the user clicks "Login" on your frontend, 
+// a Google popup appears. 
+// The user types their password into Google. 
+// Google says, "Okay, you are who you say you are." 
+// Google gives your frontend a code.
+//  This code is basically a temporary, one-time-use ticket. 
+//  The frontend instantly sends this ticket to your backend via this req.body
