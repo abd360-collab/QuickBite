@@ -26,6 +26,7 @@ export const loginUser = TryCatch(async(req, res) => {
 
  // 👉 You are sending the code (from frontend) to Google
  // “Give me real access data for this user”
+ // “Give me real access data for this user”
     const googleRes = await oauth2client.getToken(code)
 
     oauth2client.setCredentials(googleRes.tokens)
