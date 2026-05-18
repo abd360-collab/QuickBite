@@ -2,9 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import jwt, {JwtPayload} from 'jsonwebtoken';
 import {IUser} from '../model/User.js'
 
-
-// Interface Extension.
-// as we wanted req.user = decodedValue.user;
 export interface AuthenticatedRequest extends Request {
     user?: IUser | null; 
 }
