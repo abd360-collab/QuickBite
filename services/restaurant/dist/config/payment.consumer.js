@@ -31,6 +31,13 @@ export const startPaymentConsumer = async () => {
             }
             console.log("✅Order Placed: ", order._id);
             // socket work
+            //          This is service-to-service communication.
+            // Restaurant Service is telling Realtime Service:
+            // Emit event "order:new" to room restaurant:<restaurantId>
+            // So restaurant dashboard can instantly receive:
+            // New order received
+            // without refreshing page.
+            // This connects RabbitMQ + Socket.IO.
             await axios.post(`${process.env.REALTIME_SERVICE}/api/v1/internal/emit`, {
                 event: "order:new",
                 room: `restaurant:${order.restaurantId}`,
@@ -47,6 +54,7 @@ export const startPaymentConsumer = async () => {
         catch (error) {
             console.error("❌ Payment consumer error:", error);
             console.log(error);
+            channel.nack(msg, false, true);
         }
     });
 };
