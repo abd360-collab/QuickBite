@@ -31,9 +31,12 @@ const Home = () => {
   };
 
   const fetchRestaurants = async() => {
-    if(!location?.latitude || !location?.longitude) {
-      return;
-    }
+    if (
+  location?.latitude === undefined ||
+  location?.longitude === undefined
+) {
+  return;
+}
 
     try {
       setLoading(true);

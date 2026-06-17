@@ -28,11 +28,11 @@ const RestaurantCard = ({id, image, name, distance, isOpen}: props) => {
             </div>
 
             <div className="p-3 space-y-1">
-                <h3 className="truncate text-base font-semibold text-gray-800">
-                    {name}
-                    <p className="text-sm text-gray-500">{distance} KM away</p>
-                </h3>
-            </div>
+  <h3 className="truncate text-base font-semibold text-gray-800">
+    {name}
+  </h3>
+  <p className="text-sm text-gray-500">{distance} KM away</p>
+</div>
         </div>
   )
 }

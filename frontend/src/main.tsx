@@ -4,8 +4,8 @@ import './index.css'
 import App from './App.tsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { AppProvider } from './context/AppContext.tsx'
-// import 'leaflet/dist/leaflet.css';
-// import { SocketProvider } from './context/SocketContext.tsx'
+import 'leaflet/dist/leaflet.css';
+import { SocketProvider } from './context/SocketContext.tsx'
 
 
 export const authService = "http://localhost:5000";
@@ -19,9 +19,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <GoogleOAuthProvider clientId='530415462393-j4n0rbmk7ff4u814qtfudav2b0pqgr7r.apps.googleusercontent.com'>
       <AppProvider>
-        {/* <SocketProvider> */}
+        <SocketProvider>
            <App />
-        {/* </SocketProvider> */}
+        </SocketProvider>
       </AppProvider>
     </GoogleOAuthProvider>
   </StrictMode>,

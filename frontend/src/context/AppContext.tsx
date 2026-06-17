@@ -26,23 +26,32 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
 
     async function fetchUser() {
-        try {
-            const token = localStorage.getItem("token")
+  try {
+    const token = localStorage.getItem("token");
 
-            const { data } = await axios.get(`${authService}/api/auth/me`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            setUser(data);
-            setIsAuth(true);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setLoading(false);
-        }
+    if (!token) {
+      setUser(null);
+      setIsAuth(false);
+      return;
     }
+
+    const { data } = await axios.get(`${authService}/api/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    setUser(data);
+    setIsAuth(true);
+  } catch (error) {
+    console.log(error);
+    localStorage.removeItem("token");
+    setUser(null);
+    setIsAuth(false);
+  } finally {
+    setLoading(false);
+  }
+}
 
 
     const [cart, setCart] = useState<ICart[]>([]);
@@ -50,21 +59,27 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     const [quantity, setQuantity] = useState(0);
 
     async function fetchCart() {
-        if(!user || user.role !== "customer") return;
-        try {
-            const {data} = await axios.get(`${restaurantService}/api/cart/all`, {
-                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            })
+  if (!user || user.role !== "customer") {
+    setCart([]);
+    setSubTotal(0);
+    setQuantity(0);
+    return;
+  }
 
-            setCart(data.cart || [])
-            setSubTotal(data.subTotal || 0)
-            setQuantity(data.cartLength);
-        } catch(error) {
-            console.log(error);
-        }
-    }
+  try {
+    const { data } = await axios.get(`${restaurantService}/api/cart/all`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    setCart(data.cart || []);
+    setSubTotal(data.subTotal || 0);
+    setQuantity(data.cartLength || 0);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
     useEffect(() => {
         fetchUser();
